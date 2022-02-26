@@ -31,7 +31,7 @@ end
 
 class Bot < Player
   def initialize
-    super("bot", "Charmander", "bot_slave")
+    super("bot", "Charmander", "bot_slave", 5)
   end
 
   def select_move

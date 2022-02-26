@@ -14,13 +14,16 @@ class Battle
   end
 
   def show_oponents
-    puts "Great master's Great Char - Level 1"
-    puts "HP: 12"
-q
+    puts "#{@player1.name}'s #{@player1.pokemon_name.capitalize} - Level #{@player1.pokemon_level}"
+    puts "HP: #{@player1.pokemon_slave.stats[:hp]}"
+    puts "#{@player2.name}'s #{@player2.pokemon_name.capitalize} - Level #{@player2.pokemon_level}"
+    puts "HP: #{@player2.pokemon_slave.stats[:hp]}"
+
   end
   def start
     # Prepare the Battle (print messages and prepare pokemons)
     preparate_a_battle
+    show_oponents
     # Until one pokemon faints
     # --Print Battle Status
     # --Both players select their moves
@@ -38,7 +41,7 @@ q
   end
 end
 
-player1 = Player.new("eeeee", "Charmander", "aaa")
+player1 = Player.new("eeeee", "Charmander", "aaa", 3)
 player2 = Bot.new
 battle = Battle.new(player1, player2)
-battle.preparate_a_battle
+battle.start
