@@ -1,4 +1,4 @@
-require_relative 'game.rb'
+#require_relative 'game.rb'
 require_relative 'pokemon.rb'
 require_relative 'pokedex/pokemons.rb'
 
@@ -43,5 +43,5 @@ class Bot < Player
   end
 end
 
-
+Player.new("eduardo", "Charmander", "abc", 3)
 # bot2 = Bot.new("nombre_bot", "Charmander", "poke_name", 5)

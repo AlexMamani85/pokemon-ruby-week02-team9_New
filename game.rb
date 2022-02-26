@@ -1,6 +1,11 @@
 # require neccesary files
-
+require_relative "player.rb"
+require_relative 'pokemon.rb'
 class Game
+  attr_accessor :player1
+  def initialize(player1)
+    @player1 = player1
+  end
   def start
     # Create a welcome method(s) to get the name, pokemon and pokemon_name from the user
 
@@ -81,8 +86,30 @@ puts "1. Stats        2. Train        3. Leader       4. Exit"
     # Complete this
   end
 
-  def show_stats
+  def show_stats()
     # Complete this
+    #12 stats
+    pokemon1 = @player1.pokemon_slave
+    puts "#{@player1.pokemon_name}:"
+    puts "Kind: #{pokemon1.pokemon}"
+
+    puts "Type: #{pokemon1.type[0]} #{pokemon1.type[1]}"
+    puts "Level: #{pokemon1.level}"
+    puts "Stats:"
+    puts "HP: #{pokemon1.stats[:hp]}"
+    puts "Defense: #{pokemon1.stats[:defense]}"
+    puts "Special Attack: #{pokemon1.stats[:special_attack]}"
+    puts "Special Defense: #{pokemon1.stats[:special_defense]}"
+    puts "Speed: #{pokemon1.stats[:speed]}"
+    puts "Experience Points: #{pokemon1.experience_points}"
+
+
+    #@base_exp = poke_details[:base_exp]
+    #@growth_rate = poke_details[:growth_rate]
+    #@base_stats = poke_details[:base_stats]
+    #@effort_points = poke_details[:effort_points]
+    #@moves = poke_details[:moves]
+    #@stat_effor_base = 0
   end
 
   def goodbye
@@ -94,5 +121,9 @@ puts "1. Stats        2. Train        3. Leader       4. Exit"
   end
 end
 
-game = Game.new
-game.start
+#game.start
+player1 = Player.new("eeee", "Charmander", "asss", 2)
+
+game = Game.new(player1)
+game.show_stats()
+#pokemon = Pokemon.new("Charmander", 3)
