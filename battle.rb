@@ -34,7 +34,7 @@ class Battle
     # --If second is fainted, print fainted message
     # --If second not fainted, second attack first
     # --If first is fainted, print fainted message
-
+q
     # Check which player won and print messages
     # If the winner is the Player increase pokemon stats
 
