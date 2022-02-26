@@ -3,26 +3,26 @@ require_relative 'pokemon.rb'
 require_relative 'pokedex/pokemons.rb'
 
 class Player
-  attr_accessor :name, :pokemon, :starter_name, :pokemon_level, :pokemon_slave
-  def initialize(name, pokemon, starter_name, pokemon_level = 1)
+  attr_accessor :name, :pokemon, :pokemon_name, :pokemon_level, :pokemon_slave
+  def initialize(name, pokemon, pokemon_name, pokemon_level = 1)
 
     @name = name
-   
+
     @pokemon = pokemon
-    @starter_name = starter_name
+    @pokemon_name = pokemon_name
     @pokemon_level = pokemon_level
     @pokemon_slave = Pokemon.new(pokemon, pokemon_level)
   end
-  
+
   def select_move
     selected_move = ""
     puts "Great master, select your move:"
     puts
     poke_details = Pokedex::POKEMONS[@pokemon]
     puts "1. #{poke_details[:moves][0]}    2. #{poke_details[:moves][1]}      "
-    while selected_move.empty?       
+    while selected_move.empty?
       print "> "
-      selected_move = gets.chomp 
+      selected_move = gets.chomp
     end
   end
 end
@@ -39,7 +39,7 @@ class Bot < Player
     poke_details = Pokedex::POKEMONS[@pokemon]
     # puts "1. #{poke_details[:moves][0]}    2. #{poke_details[:moves][1]}      "
     selected_move = rand(0..1)
-    puts "1. #{poke_details[:moves][selected_move]} "
+    #puts "1. #{poke_details[:moves][selected_move]} "
   end
 end
 
