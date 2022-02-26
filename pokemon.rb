@@ -115,7 +115,3 @@ class Pokemon
   # private methods:
   # Create here auxiliary methods
 end
-
-
-poke = Pokemon.new("Charmander", 1)
-p poke.stats
