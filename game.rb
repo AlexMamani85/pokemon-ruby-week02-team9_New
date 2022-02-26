@@ -94,5 +94,5 @@ puts "1. Stats        2. Train        3. Leader       4. Exit"
   end
 end
 
-# game = Game.new
-# game.start
+game = Game.new
+game.start
