@@ -16,7 +16,7 @@ class Battle
   def show_oponents
     puts "Great master's Great Char - Level 1"
     puts "HP: 12"
-
+q
   end
   def start
     # Prepare the Battle (print messages and prepare pokemons)
