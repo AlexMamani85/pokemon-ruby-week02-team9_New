@@ -16,7 +16,7 @@ class Battle
   def show_oponents
     puts "#{@player1.name}'s #{@player1.pokemon_name.capitalize} - Level #{@player1.pokemon_level}"
     puts "HP: #{@player1.pokemon_slave.stats[:hp]}"
-    puts "#{@player2.name}'s #{@player2.pokemon_name.capitalize} - Level #{@player2.pokemon_level}"
+    puts "#{@player2.name}'s #{@player2.pokemon.capitalize} - Level #{@player2.pokemon_level}"
     puts "HP: #{@player2.pokemon_slave.stats[:hp]}"
 
   end

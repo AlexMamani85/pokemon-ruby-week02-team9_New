@@ -1,4 +1,4 @@
-require_relative 'game.rb'
+#require_relative 'game.rb'
 require_relative 'pokemon.rb'
 require_relative 'pokedex/pokemons.rb'
 
@@ -30,8 +30,8 @@ end
 # Create a class Bot that inherits from Player and override the select_move method
 
 class Bot < Player
-  def initialize
-    super("bot", "Charmander", "bot_slave", 5)
+  def initialize(name, pokemon, pokemon_name, pokemon_level = 1)
+    super(name, pokemon, pokemon_name, pokemon_level)
   end
 
   def select_move
@@ -43,6 +43,5 @@ class Bot < Player
   end
 end
 
-
-bot = Bot.new()
-bot.select_move
+Player.new("eduardo", "Charmander", "abc", 3)
+# bot2 = Bot.new("nombre_bot", "Charmander", "poke_name", 5)
