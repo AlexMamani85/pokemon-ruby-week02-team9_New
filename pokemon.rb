@@ -90,17 +90,17 @@ class Pokemon
     # Complete this
   end
 
-  def attack(target)
-    poke_special_moves= Pokedex::SPECIAL_MOVE_TYPE
-    p poke_special_moves
+  # def attack(target)
+  #   poke_special_moves= Pokedex::SPECIAL_MOVE_TYPE
+  #   p poke_special_moves
 
-    if 
-    end
+  #   if 
+  #   end
 
-    dmg = ((((((2 * @level) / 5.0) + 2).floor * offensive_stat * move_power) / target_defensive_stat).floor / 50.0).floor + 2
-    if rand(0..100) <= (1/16.to_f)*100 #critical damage
+  #   dmg = ((((((2 * @level) / 5.0) + 2).floor * offensive_stat * move_power) / target_defensive_stat).floor / 50.0).floor + 2
+  #   if rand(0..100) <= (1/16.to_f)*100 #critical damage
       
-  end
+  # end
 
     # Print attack message 'Tortuguita used MOVE!'
     # Accuracy check
@@ -115,7 +115,7 @@ class Pokemon
     # ---- "It doesn't affect [target name]!" when effectivenes is 0
     # -- Inflict damage to target and print message "And it hit [target name] with [damage] damage""
     # Else, print "But it MISSED!"
-  end
+  
 
   def increase_stats(target)
     # Increase stats base on the defeated pokemon and print message "#[pokemon name] gained [amount] experience points"

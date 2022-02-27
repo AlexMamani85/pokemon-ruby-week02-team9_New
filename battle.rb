@@ -91,23 +91,40 @@ class Battle
     # --If first is fainted, print fainted message
     # Check which player won and print messages
     # If the winner is the Player increase pokemon stats
+    #SPECIAL_MOVE_TYPE = %i[water grass fire ice electric psychic dragon dark]
 
   end
-  def attack(target)
-    poke_special_moves= Pokedex::SPECIAL_MOVE_TYPE
-    p " este es atacke #{@player1.poke_move.to_sym}"
-    if poke_special_moves.include?(@player1.poke_move.to_sym)
-      puts "especial move"
-    end
+  def attack(first_move, second_move)
+    poke_sp_moves= Pokedex::SPECIAL_MOVE_TYPE
+    str_sp_moves = poke_sp_moves.map { |move| move.to_s }
+    move_type = Pokedex::MOVES[first_move.poke_move][:type].to_s
+    move_power = Pokedex::MOVES[first_move.poke_move][:power].to_i
+    offensive_stat = first_move.pokemon_slave.stats[:attack].to_i
+    offensive_stat_sp = first_move.pokemon_slave.stats[:special_attack].to_i
+    target_defensive_stat = second_move.pokemon_slave.stats[:defense].to_i
+    target_defensive_stat_sp = second_move.pokemon_slave.stats[:special_defense].to_i
 
-    # dmg = ((((((2 * @level) / 5.0) + 2).floor * offensive_stat * move_power) / target_defensive_stat).floor / 50.0).floor + 2
+
+
+    if str_sp_moves.include?(move_type)
+
+      base_dmg = ((2 * first_move.pokemon_slave.level) / (5.0 + 2)).floor * offensive_stat_sp * (((move_power /  target_defensive_stat_sp).floor) / 50.0).floor + 2
+
+    else
+      p "normal attack"
+      # attack stat
+    end
+  
+    
+
+
     # if rand(0..100) <= (1/16.to_f)*100 #critical damage
     # end
   end
 end
 
-player1 = Player.new("eeeee", "Pikachu", "aaa", 3)
+player1 = Player.new("eeeee", "Pikachu", "aaa", 10)
 player2 = Bot.new("Leader", "Ratata", "ratita", 5)
 battle = Battle.new(player1, player2)
 battle.start
-battle.attack("Lol")
+battle.attack
