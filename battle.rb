@@ -2,7 +2,7 @@ require_relative "player"
 require_relative "pokedex/moves"
 
 class Battle
-  attr_accessor :player1, :player2  # (complete parameters)
+  attr_accessor :player1, :player2, :player1_move, :player2_move    # (complete parameters)
   def initialize (player, bot)
     @player1 = player
     @player2 = bot
@@ -14,22 +14,29 @@ class Battle
     puts "-------------------Battle Start!-------------------"
   end
 
+  #Show oppents stats
   def show_oponents
     puts "#{@player1.name}'s #{@player1.pokemon_name.capitalize} - Level #{@player1.pokemon_level}"
     puts "HP: #{@player1.pokemon_slave.stats[:hp]}"
     puts "#{@player2.name}'s #{@player2.pokemon.capitalize} - Level #{@player2.pokemon_level}"
     puts "HP: #{@player2.pokemon_slave.stats[:hp]}"
-
   end
-  def start
+
+  #select players moves
+  
+  
+  def start(player1, player2)
     # Prepare the Battle (print messages and prepare pokemons)
     preparate_a_battle
     show_oponents
+
     #Select Players moves
+
     @player1.select_move
     player1_move = @player1.poke_move
     @player2.select_move
     player2_move = @player2.poke_move
+
 
     #priority check (moves)
     first_move = nil
@@ -77,8 +84,6 @@ class Battle
       puts "missed attack" #Pokemon miss attack due accuracy
     end
 
-  
-
     # Until one pokemon faints
     # --Print Battle Status
     # --Both players select their moves
@@ -94,6 +99,7 @@ class Battle
     #SPECIAL_MOVE_TYPE = %i[water grass fire ice electric psychic dragon dark]
 
   end
+
   def attack(first_move, second_move)
     poke_sp_moves= Pokedex::SPECIAL_MOVE_TYPE
     str_sp_moves = poke_sp_moves.map { |move| move.to_s }
@@ -105,26 +111,28 @@ class Battle
     target_defensive_stat_sp = second_move.pokemon_slave.stats[:special_defense].to_i
 
 
-
+    ##select wich kind of move dmg apply
     if str_sp_moves.include?(move_type)
-
       base_dmg = ((2 * first_move.pokemon_slave.level) / (5.0 + 2)).floor * offensive_stat_sp * (((move_power /  target_defensive_stat_sp).floor) / 50.0).floor + 2
-
     else
-      p "normal attack"
-      # attack stat
+      base_dmg = ((2 * first_move.pokemon_slave.level) / (5.0 + 2)).floor * offensive_stat * (((move_power /  target_defensive_stat).floor) / 50.0).floor + 2
     end
-  
-    
 
-
-    # if rand(0..100) <= (1/16.to_f)*100 #critical damage
-    # end
+    ##check if  #critical damage
+    if rand(0..100) <= (1/16.to_f)*100
+      final_dmg = base_dmg * 1.5
+    end
+    p "#{final_dmg} XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    ##check effectiveness
+    ## TYPE_MULTIPLIER = [
+    # { user: :normal, target: :rock, multiplier: 0.5 }],
+    multiplier_array = Pokedex::TYPE_MULTIPLIER
+    p multiplier_array.find { |x| x[:user] == move_type.to_sym && x[:target] == second_move.pokemon_slave.type}
   end
 end
 
 player1 = Player.new("eeeee", "Pikachu", "aaa", 10)
 player2 = Bot.new("Leader", "Ratata", "ratita", 5)
 battle = Battle.new(player1, player2)
-battle.start
-battle.attack
+battle.start(player1, player2)
+battle.attack(player1, player2)
