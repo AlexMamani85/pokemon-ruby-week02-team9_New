@@ -2,9 +2,10 @@
 require_relative "player.rb"
 require_relative 'pokemon.rb'
 class Game
-  attr_accessor :player1
-  def initialize(player1)
+  attr_accessor :player1, :player2
+  def initialize(player1, player2)
     @player1 = player1
+    @player2 = player2
   end
   def start
     # Create a welcome method(s) to get the name, pokemon and pokemon_name from the user
@@ -78,8 +79,25 @@ puts "1. Stats        2. Train        3. Leader       4. Exit"
     goodbye
   end
 
+  
   def train
-    # Complete this
+    pokemons_hash = Pokedex::POKEMONS
+    all_pokemons = pokemons_hash.collect {| key, value| key }
+    random_poke = all_pokemons.sample
+    random_level = rand(1..10)
+    bot2 = Bot.new("Random Person", random_poke, "poke_name", random_level)
+
+    puts "#{@player1.name} challenge Random Person for training"
+    puts "Random Person has a #{random_poke} level #{random_level}"
+    puts "What do you want to do now?"
+    puts
+    puts "1. Fight        2. Leave        "
+    print "> "
+    if gets.chomp == "fight"
+      train_battle = Battle.new(player1, player2)
+
+
+
   end
 
   def challenge_leader
@@ -103,13 +121,6 @@ puts "1. Stats        2. Train        3. Leader       4. Exit"
     puts "Speed: #{pokemon1.stats[:speed]}"
     puts "Experience Points: #{pokemon1.experience_points}"
 
-
-    #@base_exp = poke_details[:base_exp]
-    #@growth_rate = poke_details[:growth_rate]
-    #@base_stats = poke_details[:base_stats]
-    #@effort_points = poke_details[:effort_points]
-    #@moves = poke_details[:moves]
-    #@stat_effor_base = 0
   end
 
   def goodbye
@@ -125,5 +136,5 @@ end
 player1 = Player.new("eeee", "Charmander", "asss", 2)
 
 game = Game.new(player1)
-game.show_stats()
+game.train
 #pokemon = Pokemon.new("Charmander", 3)

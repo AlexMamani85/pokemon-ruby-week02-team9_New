@@ -1,4 +1,5 @@
 require_relative "player"
+require_relative "pokedex/moves"
 
 class Battle
   attr_accessor :player1, :player2  # (complete parameters)
@@ -24,6 +25,60 @@ class Battle
     # Prepare the Battle (print messages and prepare pokemons)
     preparate_a_battle
     show_oponents
+    #Select Players moves
+    @player1.select_move
+    player1_move = @player1.poke_move
+    @player2.select_move
+    player2_move = @player2.poke_move
+
+    #priority check (moves)
+    first_move = nil
+    second_move = nil
+    poke1_priority = Pokedex::MOVES[player1_move][:priority]
+    poke2_priority = Pokedex::MOVES[player2_move][:priority]
+    
+    if poke1_priority > poke2_priority
+      first_move = @player1
+      second_move = @player2
+    elsif poke1_priority < poke2_priority
+      first_move = @player2
+      second_move = @player1
+    else
+      poke1_speed = @player1.pokemon_slave.stats[:speed]
+      poke2_speed = @player2.pokemon_slave.stats[:speed]
+      if poke1_speed > poke2_speed 
+        first_move = @player1
+        second_move = @player2
+      elsif poke1_speed < poke2_speed
+        first_move = @player2
+        second_move = @player1
+      else
+        if rand(0..1) == 0
+          first_move = @player1
+          second_move = @player2
+        else
+          first_move = @player2
+          second_move = @player1
+        end
+      end
+    end
+
+    #Accuracy check 
+    first_move_accuracy= Pokedex::MOVES[first_move.poke_move][:accuracy]
+    second_move_accuracy= Pokedex::MOVES[second_move.poke_move][:accuracy]
+    
+    if rand(100) <= first_move_accuracy
+      puts "--------------------------------------------------"
+      puts "#{first_move.pokemon_name} used #{first_move.select_move}!"
+      puts "It's not very effective..." 
+      ##super effective, not very effective, not effective at all or regular
+      puts "And it hit Onix with 1 damage"
+    else
+      puts "missed attack" #Pokemon miss attack due accuracy
+    end
+
+  
+
     # Until one pokemon faints
     # --Print Battle Status
     # --Both players select their moves
@@ -34,14 +89,25 @@ class Battle
     # --If second is fainted, print fainted message
     # --If second not fainted, second attack first
     # --If first is fainted, print fainted message
-q
     # Check which player won and print messages
     # If the winner is the Player increase pokemon stats
 
   end
+  def attack(target)
+    poke_special_moves= Pokedex::SPECIAL_MOVE_TYPE
+    p " este es atacke #{@player1.poke_move.to_sym}"
+    if poke_special_moves.include?(@player1.poke_move.to_sym)
+      puts "especial move"
+    end
+
+    # dmg = ((((((2 * @level) / 5.0) + 2).floor * offensive_stat * move_power) / target_defensive_stat).floor / 50.0).floor + 2
+    # if rand(0..100) <= (1/16.to_f)*100 #critical damage
+    # end
+  end
 end
 
-player1 = Player.new("eeeee", "Charmander", "aaa", 3)
-player2 = Bot.new
+player1 = Player.new("eeeee", "Pikachu", "aaa", 3)
+player2 = Bot.new("Leader", "Ratata", "ratita", 5)
 battle = Battle.new(player1, player2)
 battle.start
+battle.attack("Lol")

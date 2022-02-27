@@ -1,4 +1,5 @@
 require_relative 'pokedex/pokemons.rb'
+require_relative 'pokedex/moves'
 
 class Pokemon
   # include neccesary modules
@@ -90,6 +91,17 @@ class Pokemon
   end
 
   def attack(target)
+    poke_special_moves= Pokedex::SPECIAL_MOVE_TYPE
+    p poke_special_moves
+
+    if 
+    end
+
+    dmg = ((((((2 * @level) / 5.0) + 2).floor * offensive_stat * move_power) / target_defensive_stat).floor / 50.0).floor + 2
+    if rand(0..100) <= (1/16.to_f)*100 #critical damage
+      
+  end
+
     # Print attack message 'Tortuguita used MOVE!'
     # Accuracy check
     # If the movement is not missed
@@ -115,3 +127,6 @@ class Pokemon
   # private methods:
   # Create here auxiliary methods
 end
+
+# test = Pokemon.new("Charmander")
+# test.attack
