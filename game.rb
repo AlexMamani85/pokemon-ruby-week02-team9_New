@@ -42,7 +42,7 @@ class Game
     puts
     puts "1. Fight        2. Leave"
     print "> "
-    if gets.chomp == "fight"
+    if gets.chomp.downcase.capitalize == "fight".downcase.capitalize
     battle = Battle.new(@player1, player)
     battle.start
     else
@@ -128,7 +128,7 @@ class Game
     puts
     puts "1. Fight        2. Leave        "
     print "> "
-    if gets.chomp == "fight"
+    if gets.chomp.downcase.capitalize == "fight".downcase.capitalize
       train_battle = Battle.new(@player1, @player2)
       train_battle.start
     else
