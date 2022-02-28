@@ -3,7 +3,7 @@ require_relative 'pokedex/moves'
 
 class Pokemon
   # include neccesary modules
-  attr_accessor :poke_details, :species, :type, :base_exp, :growth_rate, :base_stats, :effort_points, :moves, :name, :level, :individual_stats, :effort_values, :experience_points, :stats, :pokemon
+  attr_accessor :experience_points_gained, :poke_details, :species, :type, :base_exp, :growth_rate, :base_stats, :effort_points, :moves, :name, :level, :individual_stats, :effort_values, :experience_points, :stats, :pokemon
 
   # (complete parameters)
   def initialize (pokemon, level = 1)
@@ -54,26 +54,30 @@ class Pokemon
     {hp: hp, attack: attack, defense: defense, special_attack: special_attack, special_defense: special_defense, speed: speed}
   end
 
+  def raise_level
+    if @experience_points < @experience_points_gained
+      @level += @level
+    end
+    @experience_points = calculate_exp
+  end
+
   def calculate_exp
     calc_exp = 0
     if @level == 1
       calc_exp = 0
     elsif @level > 1
       if growth_rate == :slow
-        calc_exp = (5*(@level**3))/4
+        calc_exp = (5*(@level**3)).to_f/4
       elsif growth_rate == :medium_slow
-        calc_exp = ((6)*(@level**3)) / 5 - (15 * (@level**2)) + (100 * @level) - (140)
+        calc_exp = (6*(@level**3).to_f) / 5 - (15 * (@level**2)) + (100 * @level) - 140
       elsif growth_rate == :medium_fast
         calc_exp = @level ** 3
       elsif growth_rate == :fast
-        calc_exp = (4 * (@level) ** 3) / 5
+        calc_exp = (4 * (@level) ** 3).to_f / 5
       end
     end
     return calc_exp
   end
-
-
-
   def prepare_for_battle
     # Complete this
   end
@@ -87,7 +91,8 @@ class Pokemon
   end
 
   def fainted?
-    # Complete this
+    # puts "su hp #{@stats[:hp]}"
+    (@stats[:hp] <= 0)
   end
 
   # def attack(target)

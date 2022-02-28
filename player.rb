@@ -9,17 +9,19 @@ class Player
     @name = name
 
     @pokemon = pokemon
+    p pokemon_name
     @pokemon_name = pokemon_name
-    if pokemon_name == ""
-      @pokemon_name = @pokemon
-    end
+    #if pokemon_name == "" || pokemon_name == nil
+    #  @pokemon_name = @pokemon
+    #end
     @pokemon_level = pokemon_level
     @pokemon_slave = Pokemon.new(pokemon, pokemon_level)
   end
 
   def select_move
     selected_move = ""
-    puts "Great master, select your move:"
+    #puts "Great master, select your move:"
+    puts "#{@name}, select your move:"
     puts
     poke_details = Pokedex::POKEMONS[@pokemon]
     puts "1. #{poke_details[:moves][0]}    2. #{poke_details[:moves][1]}      "
@@ -39,15 +41,11 @@ class Bot < Player
   end
 
   def select_move
-    # selected_move = nil
     poke_details = Pokedex::POKEMONS[@pokemon]
-    # puts "1. #{poke_details[:moves][0]}    2. #{poke_details[:moves][1]}      "
     random_move = rand(0..1)
     bot_move = poke_details[:moves][random_move]
+    # puts "#{@pokemon_name} used #{bot_move}"
     @poke_move = bot_move
   end
 
 end
-
-Player.new("eduardo", "Charmander", "abc", 3)
-bot2 = Bot.new("nombre_bot", "Charmander", "poke_name", 5)
