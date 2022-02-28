@@ -1,26 +1,25 @@
-#require_relative 'game.rb'
-require_relative 'pokemon.rb'
-require_relative 'pokedex/pokemons.rb'
+# require_relative "game."
+require_relative "pokemon"
+require_relative "pokedex/pokemons"
 
 class Player
   attr_accessor :name, :pokemon, :pokemon_name, :pokemon_level, :pokemon_slave, :poke_move
+
   def initialize(name, pokemon, pokemon_name, pokemon_level = 1)
-
     @name = name
-
     @pokemon = pokemon
-    p pokemon_name
+    # p pokemon_name
     @pokemon_name = pokemon_name
-    #if pokemon_name == "" || pokemon_name == nil
+    # if pokemon_name == "" || pokemon_name == nil
     #  @pokemon_name = @pokemon
-    #end
+    # end
     @pokemon_level = pokemon_level
     @pokemon_slave = Pokemon.new(pokemon, pokemon_level)
   end
 
   def select_move
     selected_move = ""
-    #puts "Great master, select your move:"
+    # puts "Great master, select your move:"
     puts "#{@name}, select your move:"
     puts
     poke_details = Pokedex::POKEMONS[@pokemon]
@@ -32,7 +31,6 @@ class Player
     @poke_move = selected_move
   end
 end
-
 # Create a class Bot that inherits from Player and override the select_move method
 
 class Bot < Player
@@ -44,8 +42,7 @@ class Bot < Player
     poke_details = Pokedex::POKEMONS[@pokemon]
     random_move = rand(0..1)
     bot_move = poke_details[:moves][random_move]
-    # puts "#{@pokemon_name} used #{bot_move}"
+    # puts "# {@pokemon_name} used # {bot_move}"
     @poke_move = bot_move
   end
-
 end
