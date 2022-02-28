@@ -38,13 +38,14 @@ class Battle
       puts "#{@player1.pokemon_name} FAINTED!"
       puts "--------------------------------------------------"
       puts "#{@player2.pokemon_name} WINS!"
-     
+      @player1.pokemon_slave.stats[:hp] = @player1.pokemon_slave.hp_reset
     end
     if @player2.pokemon_slave.fainted? == true
       puts "#{@player2.pokemon_name} FAINTED!"
       puts "--------------------------------------------------"
       puts "#{@player1.pokemon_name} WINS!"
       puts "#{@player1.pokemon_name} gained #{calculate_experience(@player1, @player2)} experience points"
+      @player1.pokemon_slave.stats[:hp] = @player1.pokemon_slave.hp_reset
     end
   end
 
@@ -188,7 +189,7 @@ class Battle
   def calculate_experience(player_winner, player_loser)
     gain_xp = (player_winner.pokemon_slave.base_exp.to_f * player_loser.pokemon_slave.level.to_f / 7.0).to_f.floor
     player_winner.pokemon_slave.experience_points_gained = gain_xp
-    player_winner.raise_level
+    player_winner.pokemon_slave.raise_level
     return gain_xp
   end
 end

@@ -3,7 +3,7 @@ require_relative 'pokedex/moves'
 
 class Pokemon
   # include neccesary modules
-  attr_accessor :experience_points_gained, :poke_details, :species, :type, :base_exp, :growth_rate, :base_stats, :effort_points, :moves, :name, :level, :individual_stats, :effort_values, :experience_points, :stats, :pokemon
+  attr_accessor :hp_reset, :experience_points_gained, :poke_details, :species, :type, :base_exp, :growth_rate, :base_stats, :effort_points, :moves, :name, :level, :individual_stats, :effort_values, :experience_points, :stats, :pokemon
 
   # (complete parameters)
   def initialize (pokemon, level = 1)
@@ -24,7 +24,7 @@ class Pokemon
     @effort_values = { hp: 0, attack: 0, defense: 0, special_attack: 0, special_defense: 0, speed: 0 }
     @experience_points = calculate_exp
     @stats = real_stats
-
+    
     # Retrieve pokemon info from Pokedex and set instance variables
     # Calculate Individual Values and store them in instance variable
     # Create instance variable with effort values. All set to 0
@@ -46,6 +46,7 @@ class Pokemon
   def real_stats
     poke_details = Pokedex::POKEMONS[@pokemon]
     hp = ((((2 * poke_details[:base_stats][:hp] + @individual_stats[:hp] + @stat_effor_base) * @level) / 100) + @level + 10).floor
+    @hp_reset = hp
     attack = ((((2 * poke_details[:base_stats][:attack] + @individual_stats[:attack] + @stat_effor_base) * @level) / 100) + 5).floor
     defense = ((((2 * poke_details[:base_stats][:defense] + @individual_stats[:defense] + @stat_effor_base) * @level) / 100) + 5).floor
     special_attack = ((((2 * poke_details[:base_stats][:special_attack] + @individual_stats[:special_attack] + @stat_effor_base) * @level) / 100) + 5).floor
@@ -54,11 +55,14 @@ class Pokemon
     {hp: hp, attack: attack, defense: defense, special_attack: special_attack, special_defense: special_defense, speed: speed}
   end
 
+
   def raise_level
-    if @experience_points < @experience_points_gained
-      @level += @level
+    @experience_points += @experience_points_gained
+    if calculate_exp < @experience_points
+      @level += 1
+      @stats = real_stats
     end
-    @experience_points = calculate_exp
+    
   end
 
   def calculate_exp

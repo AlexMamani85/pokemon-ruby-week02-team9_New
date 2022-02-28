@@ -33,6 +33,23 @@ class Game
     puts "Experience Points: #{pokemon1.experience_points}"
 
   end
+
+  def challenge_leader
+    player = Bot.new("Brock", "Onix", "Onix", 10)
+    puts "#{@player1.name} challenge the  Gym Leader #{player.name} for a fight!
+    #{player.name} has a #{player.pokemon_slave.pokemon} level #{player.pokemon_slave.level}
+    What do you want to do now?"
+    puts
+    puts "1. Fight        2. Leave"
+    print "> "
+    if gets.chomp == "fight"
+    battle = Battle.new(@player1, player)
+    battle.start
+    else
+      puts "exit"
+    end
+  end
+
   def start
     # Create a welcome method(s) to get the name, pokemon and pokemon_name from the user
 
@@ -79,7 +96,7 @@ class Game
       puts "-----------------------Menu-----------------------"
       puts
       puts "1. Stats        2. Train        3. Leader       4. Exit"
-      menu = gets.chomp
+      menu = gets.chomp.downcase.capitalize
       action = menu
       case action
         
@@ -102,7 +119,7 @@ class Game
     pokemons_hash = Pokedex::POKEMONS
     all_pokemons = pokemons_hash.collect {| key, value| key }
     random_poke = all_pokemons.sample
-    random_level = rand(1..10)
+    random_level = rand(1..10) ###Pokemon Level random chose
     @player2 = Bot.new("Random Person", random_poke, "", random_level)
 
     puts "#{@player1.name} challenge Random Person for training"
@@ -114,13 +131,13 @@ class Game
     if gets.chomp == "fight"
       train_battle = Battle.new(@player1, @player2)
       train_battle.start
-
+    else
+      puts "exit"
+    
 
   end
 
-  def challenge_leader
-    # Complete this
-  end
+  
 
   
 
