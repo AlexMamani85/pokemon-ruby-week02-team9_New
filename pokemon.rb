@@ -1,16 +1,16 @@
-require_relative 'pokedex/pokemons.rb'
-require_relative 'pokedex/moves'
+require_relative "pokedex/pokemons"
+require_relative "pokedex/moves"
 
 class Pokemon
   # include neccesary modules
   attr_accessor :hp_reset, :experience_points_gained, :poke_details, :species, :type, :base_exp, :growth_rate, :base_stats, :effort_points, :moves, :name, :level, :individual_stats, :effort_values, :experience_points, :stats, :pokemon
 
   # (complete parameters)
-  def initialize (pokemon, level = 1)
+  def initialize(pokemon, level = 1)
     poke_details = Pokedex::POKEMONS[pokemon]
     @pokemon = pokemon
     @species = poke_details[:species]
-    @type = poke_details[:type] 
+    @type = poke_details[:type]
     @base_exp = poke_details[:base_exp]
     @growth_rate = poke_details[:growth_rate]
     @base_stats = poke_details[:base_stats]
@@ -24,7 +24,6 @@ class Pokemon
     @effort_values = { hp: 0, attack: 0, defense: 0, special_attack: 0, special_defense: 0, speed: 0 }
     @experience_points = calculate_exp
     @stats = real_stats
-    
     # Retrieve pokemon info from Pokedex and set instance variables
     # Calculate Individual Values and store them in instance variable
     # Create instance variable with effort values. All set to 0
@@ -35,7 +34,7 @@ class Pokemon
   end
 
   def create_individual_stats
-     { hp: rand(0..31),
+    { hp: rand(0..31),
       attack: rand(0..31),
       defense: rand(0..31),
       special_attack: rand(0..31),
@@ -52,17 +51,17 @@ class Pokemon
     special_attack = ((((2 * poke_details[:base_stats][:special_attack] + @individual_stats[:special_attack] + @stat_effor_base) * @level) / 100) + 5).floor
     special_defense = ((((2 * poke_details[:base_stats][:special_defense] + @individual_stats[:special_defense] + @stat_effor_base) * @level) / 100) + 5).floor
     speed = ((((2 * poke_details[:base_stats][:speed] + @individual_stats[:speed] + @stat_effor_base) * @level) / 100) + 5).floor
-    {hp: hp, attack: attack, defense: defense, special_attack: special_attack, special_defense: special_defense, speed: speed}
+    {hp: hp, attack: attack, defense: defense, special_attack: special_attack, special_defense: special_defense, speed: speed }
   end
 
 
   def raise_level
+
     @experience_points += @experience_points_gained
     if calculate_exp < @experience_points
       @level += 1
       @stats = real_stats
     end
-    
   end
 
   def calculate_exp
@@ -70,19 +69,21 @@ class Pokemon
     if @level == 1
       calc_exp = 0
     elsif @level > 1
-      if growth_rate == :slow
-        calc_exp = (5*(@level**3)).to_f/4
-      elsif growth_rate == :medium_slow
+      case growth_rate
+      when :slow
+        calc_exp = (5 * (@level**3)).to_f / 4
+      when :medium_slow
         calc_exp = (6*(@level**3).to_f) / 5 - (15 * (@level**2)) + (100 * @level) - 140
-      elsif growth_rate == :medium_fast
+      when :medium_fast
         calc_exp = @level ** 3
-      elsif growth_rate == :fast
-        calc_exp = (4 * (@level) ** 3).to_f / 5
+      when :fast
+        calc_exp = (4 * (@level)**3).to_f / 5
       end
     end
-    return calc_exp
+    calc_exp
   end
   def prepare_for_battle
+
     # Complete this
   end
 
@@ -103,39 +104,32 @@ class Pokemon
   #   poke_special_moves= Pokedex::SPECIAL_MOVE_TYPE
   #   p poke_special_moves
 
-  #   if 
+  #   if
   #   end
 
   #   dmg = ((((((2 * @level) / 5.0) + 2).floor * offensive_stat * move_power) / target_defensive_stat).floor / 50.0).floor + 2
   #   if rand(0..100) <= (1/16.to_f)*100 #critical damage
-      
-  # end
 
-    # Print attack message 'Tortuguita used MOVE!'
-    # Accuracy check
-    # If the movement is not missed
-    # -- Calculate base damage
-    # -- Critical Hit check
-    # -- If critical, multiply base damage and print message 'It was CRITICAL hit!'
-    # -- Effectiveness check
-    # -- Mutltiply damage by effectiveness multiplier and round down. Print message if neccesary
-    # ---- "It's not very effective..." when effectivenes is less than or equal to 0.5
-    # ---- "It's super effective!" when effectivenes is greater than or equal to 1.5
-    # ---- "It doesn't affect [target name]!" when effectivenes is 0
-    # -- Inflict damage to target and print message "And it hit [target name] with [damage] damage""
-    # Else, print "But it MISSED!"
-  
-
+  # Print attack message 'Tortuguita used MOVE!'
+  # Accuracy check
+  # If the movement is not missed
+  # -- Calculate base damage
+  # -- Critical Hit check
+  # -- If critical, multiply base damage and print message 'It was CRITICAL hit!'
+  # -- Effectiveness check
+  # -- Mutltiply damage by effectiveness multiplier and round down. Print message if neccesary
+  # ---- "It's not very effective..." when effectivenes is less than or equal to 0.5
+  # ---- "It's super effective!" when effectivenes is greater than or equal to 1.5
+  # ---- "It doesn't affect [target name]!" when effectivenes is 0
+  # -- Inflict damage to target and print message "And it hit [target name] with [damage] damage""
+  # Else, print "But it MISSED!"
   def increase_stats(target)
     # Increase stats base on the defeated pokemon and print message "#[pokemon name] gained [amount] experience points"
-
     # If the new experience point are enough to level up, do it and print
     # message "#[pokemon name] reached level [level]!" # -- Re-calculate the stat
   end
-
   # private methods:
   # Create here auxiliary methods
 end
-
 # test = Pokemon.new("Charmander")
 # test.attack
